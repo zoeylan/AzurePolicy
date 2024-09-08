@@ -1,3 +1,5 @@
+Param($RedisResourceGroup, $RedisName)
+
 $aofValue = (Get-AzRedisCache -ResourceGroupName $RedisResourceGroup -Name $RedisName).RedisConfiguration['aof-backup-enabled']
 $rdbValue = (Get-AzRedisCache -ResourceGroupName $RedisResourceGroup -Name $RedisName).RedisConfiguration['rdb-backup-enabled']
 
