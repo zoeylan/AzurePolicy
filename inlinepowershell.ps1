@@ -1,14 +1,10 @@
-$aofvalue = az redis show --resource-group 'zoeyredisRG' --name 'zoeypremiumredis1' --query "redisConfiguration.aofBackupEnabled"
+$aofValue = (Get-AzRedisCache -ResourceGroupName $RedisResourceGroup -Name $RedisName).RedisConfiguration['aof-backup-enabled']
+$rdbValue = (Get-AzRedisCache -ResourceGroupName $RedisResourceGroup -Name $RedisName).RedisConfiguration['rdb-backup-enabled']
 
-$rdbvalue = az redis show --resource-group 'zoeyredisRG' --name 'zoeypremiumredis1' --query "redisConfiguration.rdbBackupEnabled"
-
-if ($aofvalue -eq "true")
-{
-    Set-AzRedisCache -Name "zoeypremiumredis1"  -RedisConfiguration @{"aof-backup-enabled" = "false"}
+if ($aofValue -eq "true") {
+    Set-AzRedisCache -ResourceGroupName $RedisResourceGroup -Name $RedisName -RedisConfiguration @{"aof-backup-enabled" = "false"}
 }
 
-
-if ($rdbvalue -eq "true")
-{
-    Set-AzRedisCache -Name "zoeypremiumredis1"  -RedisConfiguration @{"rdb-backup-enabled" = "false"}
+if ($rdbValue -eq "true") {
+    Set-AzRedisCache -ResourceGroupName $RedisResourceGroup -Name $RedisName -RedisConfiguration @{"rdb-backup-enabled" = "false"}
 }
